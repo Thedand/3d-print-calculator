@@ -13,7 +13,14 @@ function Field({ label, value, onChange, unit, min = 0, step = 1 }: { label: str
     <label className="field">
       <span>{label}</span>
       <span className="input-shell">
-        <input type="number" min={min} step={step} value={value} onChange={(e) => onChange(Math.max(min, Number(e.target.value) || 0))} />
+        <input
+  type="number"
+  min={min}
+  step={step}
+  value={value === 0 ? "" : value}
+  onChange={(e) =>
+    onChange(Math.max(min, Number(e.target.value) || 0))
+  }/>
         <b>{unit}</b>
       </span>
     </label>
@@ -78,7 +85,7 @@ export default function Home() {
               <div className="section-title"><Icon>◇</Icon><div><h2>Модель</h2><p>Параметры задания из слайсера</p></div></div>
               <div className="fields three">
                 <Field label="Вес модели" value={weight} onChange={setWeight} unit="г" />
-                <label className="field"><span>Время печати</span><span className="time-fields"><span className="input-shell"><input type="number" min="0" value={hours} onChange={(e) => setHours(Math.max(0, +e.target.value || 0))}/><b>ч</b></span><span className="input-shell"><input type="number" min="0" max="59" value={minutes} onChange={(e) => setMinutes(Math.min(59, Math.max(0, +e.target.value || 0)))}/><b>мин</b></span></span></label>
+                <label className="field"><span>Время печати</span><span className="time-fields"><span className="input-shell"><input type="number" min="0" value={hours === 0 ? "" : hours} onChange={(e) => setHours(Math.max(0, +e.target.value || 0))}/><b>ч</b></span><span className="input-shell"><input type="number" min="0" max="59" value={minutes === 0 ? "" : minutes} onChange={(e) => setMinutes(Math.min(59, Math.max(0, +e.target.value || 0)))}/><b>мин</b></span></span></label>
                 <Field label="Количество" value={quantity} onChange={setQuantity} unit="шт." min={1} />
               </div>
             </div>
